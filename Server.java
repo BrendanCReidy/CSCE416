@@ -40,9 +40,9 @@ public Server(int port)
 		/* reads message from client until "Over" is sent */
 		while (!line.equals("Over")) 
 		{
-				System.out.println("Waiting for input from client...");
-		        line = in.readUTF(); 
-		        System.out.println("Got input from client: " + line);
+		        line = in.readUTF();
+				System.out.println("Got input from client...");
+		        System.out.println("Printing input: " + line);
 		        line = input.readLine();
 		        out.writeUTF(line);
 		} 
