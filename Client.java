@@ -56,7 +56,8 @@ public Client(String address, int port)
 	/* close the connection */
 	try { 
 		input.close(); 
-		out.close(); 
+		out.close();
+		in.close();
 		socket.close(); 
 	} catch(Exception i) {
 		System.out.println(i);  

@@ -49,7 +49,9 @@ public Server(int port)
 		System.out.println("Closing connection"); 
 		
 		/* close connection */
-		socket.close(); 
+		input.close();
+		socket.close();
+		out.close();
 		in.close(); 
 
 	} catch(EOFException i) { 
