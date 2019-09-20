@@ -17,7 +17,7 @@ public class http_client {
             String finalURL = getRedirectedURL(url);
             URL urlObject = new URL(finalURL);
             HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
-            connection.setReadTimeout(300);
+            connection.setReadTimeout(2000);
             String output = "Printing HTTP header info from " + finalURL + "\n";
             Map<String, List<String>> map = connection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet())
