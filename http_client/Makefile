@@ -2,7 +2,7 @@
 
 default: http_client.class
 
-# Client
+# http_client
 http_client.class: http_client.java
 	javac http_client.java
 
