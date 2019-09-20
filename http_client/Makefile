@@ -1,6 +1,6 @@
 # Makefile for JAVA network programs
 
-default: Server.class Client.class
+default: http_client.class
 
 # Client
 Server.class: http_client.java
