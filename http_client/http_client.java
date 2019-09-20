@@ -1,64 +1,56 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
 public class http_client {
-    public static String desiredUrl = "https://cse.sc.edu/~oreillyj";
-    public static void main(String[] args){
-        URL url = null;
-        BufferedReader reader = null;
-        StringBuilder stringBuilder;
-
-        try
-        {
-            // create the HttpURLConnection
-            url = new URL(desiredUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            // just want to do an HTTP GET here
-            connection.setRequestMethod("GET");
-            connection.setReadTimeout(15*1000);
-            connection.connect();
-            System.out.println("Printing HTTP header info from " + desiredUrl);
+    public static String outputFileName = "http_client_output";
+    public static void main(String[] args) throws IOException {
+        if(args.length<1){
+            System.out.println("Usage: http_client <URL>");
+        }else {
+            String url = args[0];
+            BufferedReader input = null;
+            String finalURL = getRedirectedURL(url);
+            URL obj = new URL(finalURL);
+            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+            connection.setReadTimeout(15000);
+            connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+            connection.addRequestProperty("User-Agent", "Mozilla");
+            connection.addRequestProperty("Referer", "google.com");
+            String output = "Printing HTTP header info from " + finalURL + "\n";
             Map<String, List<String>> map = connection.getHeaderFields();
-            for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                System.out.println(entry.getKey() +
-                        ": " + entry.getValue());
-            }
+            for (Map.Entry<String, List<String>> entry : map.entrySet())
+                output += entry.getKey() + ": " + entry.getValue() + "\n";
 
-            // read the output from the server
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            stringBuilder = new StringBuilder();
+            input = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
 
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {
-                stringBuilder.append(line + "\n");
+            while ((inputLine = input.readLine()) != null)
+                output += inputLine + "\n";
+            try (PrintWriter out = new PrintWriter(outputFileName)) {
+                out.println(output);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            System.out.println(stringBuilder.toString());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            // close the reader; this can throw an exception too, so
-            // wrap it in another try/catch block.
-            if (reader != null)
-            {
-                try
-                {
-                    reader.close();
-                }
-                catch (IOException ioe)
-                {
-                    ioe.printStackTrace();
-                }
+            if (input != null) {
+                input.close();
             }
         }
+    }
+    public static String getRedirectedURL(String url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setInstanceFollowRedirects(false);
+        connection.connect();
+        connection.getInputStream();
+
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM) {
+            String redirectUrl = connection.getHeaderField("Location");
+            return getRedirectedURL(redirectUrl);
+        }
+        return url;
     }
 }

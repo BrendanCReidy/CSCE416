@@ -1,0 +1,46 @@
+Printing HTTP header info from https://cse.sc.edu/~oreillyj/
+Keep-Alive: [timeout=5, max=100]
+Accept-Ranges: [bytes]
+null: [HTTP/1.1 200 OK]
+Server: [Apache/2.4.7 (Ubuntu)]
+ETag: ["455-5910e5b171e89"]
+Connection: [Keep-Alive]
+Vary: [Accept-Encoding]
+Last-Modified: [Tue, 27 Aug 2019 00:28:47 GMT]
+Content-Length: [1109]
+Date: [Fri, 20 Sep 2019 20:28:43 GMT]
+Content-Type: [text/html]
+<!DOCTYPE html>
+<html>
+<head>
+<title>James O'Reilly</title>
+</head>
+<body>
+
+<h1>James O'Reilly</h1>
+<ul>
+<li><h2>Instructor for various CSCE courses</h2>
+<li><h2>Office Hours:</h2>
+	<ul>
+	<li> <h3>Office Hours: M,W 11:00AM-12:00PM, Tu,Th 2:45-3:45 <em>or by appointment</em></h3>
+        <li> <h3>If you are coming by, it is a good idea to let me know you are coming by e-mail.</h3>
+ 	<li> <h3>My official office is 2271 and will be there during office hours</h3>
+        <li> <h3>Alternately, try 2240, back entrance (not by stairwell)</h3> 
+	</ul>
+</li>
+</ul>
+<!--<h3>Grading Questions? grader pages:</h3>
+<ul>
+	<li><a href="https://oceank.github.io/">CSCE 311 Grader Page (Jianhai Su) </a>
+	<li><a href="http://cse.sc.edu/~xiangyu">CSCE 350 Grader Page (Xiangyu Hu)</a>
+</ul>-->
+Most other information is on <a href="http://dropbox.cse.sc.edu">dropbox.cse.sc.edu</a>
+
+<div style="text-align:center">
+<img src="images/tags.png" alt="mismatch tags" > <br>
+From <a href="https://imgs.xkcd.com/comics/tags.png">https://imgs.xkcd.com/comics/tags.png</a>
+</div>
+
+</body>
+</html>
+
