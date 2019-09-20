@@ -15,12 +15,9 @@ public class http_client {
             String url = args[0];
             BufferedReader input = null;
             String finalURL = getRedirectedURL(url);
-            URL obj = new URL(finalURL);
-            HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-            connection.setReadTimeout(15000);
-            connection.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-            connection.addRequestProperty("User-Agent", "Mozilla");
-            connection.addRequestProperty("Referer", "google.com");
+            URL urlObject = new URL(finalURL);
+            HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
+            connection.setReadTimeout(300);
             String output = "Printing HTTP header info from " + finalURL + "\n";
             Map<String, List<String>> map = connection.getHeaderFields();
             for (Map.Entry<String, List<String>> entry : map.entrySet())
