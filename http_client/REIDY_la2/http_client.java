@@ -14,22 +14,7 @@ public class http_client {
         }else {
             String url = args[0];
             BufferedReader input = null;
-            boolean cont = true;
-            String finalURL;
-            String redirectUrl = url;
-            do{
-                finalURL = redirectUrl;
-                HttpURLConnection connection = (HttpURLConnection) new URL(redirectUrl).openConnection();
-                connection.setInstanceFollowRedirects(false);
-                connection.connect();
-                connection.getInputStream();
-                if(connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM)
-                {
-                    redirectUrl = connection.getHeaderField("Location");
-                }else{
-                    cont = false;
-                }
-            }while(cont);
+            String finalURL = getRedirectedURL(url);
             URL urlObject = new URL(finalURL);
             HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
             connection.setReadTimeout(10000);
@@ -52,5 +37,17 @@ public class http_client {
                 input.close();
             }
         }
+    }
+    public static String getRedirectedURL(String url) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+        connection.setInstanceFollowRedirects(false);
+        connection.connect();
+        connection.getInputStream();
+
+        if (connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM) {
+            String redirectUrl = connection.getHeaderField("Location");
+            return getRedirectedURL(redirectUrl);
+        }
+        return url;
     }
 }
