@@ -1,3 +1,9 @@
+/*
+By Brendan Reidy
+9/27/2019
+Gets html and header info given url
+ */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,11 +30,9 @@ public class http_client {
                 connection.connect();
                 connection.getInputStream();
                 if(connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_PERM)
-                {
                     redirectUrl = connection.getHeaderField("Location");
-                }else{
+                else
                     cont = false;
-                }
             }while(cont);
             URL urlObject = new URL(finalURL);
             HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
